@@ -97,7 +97,7 @@ for (let btn in buttons) {
 
 /****ALLOW FOR MOBILE COMPABILITY****/
 
-document.addEventListener("touchstart", function() {
+document.querySelector("body").addEventListener("touchstart", function() {
     if (active) return; // do nothing if already active
 
     document.body.classList.remove("game-over");
