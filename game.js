@@ -95,5 +95,59 @@ for (let btn in buttons) {
     })   
 }
 
+/****ALLOW FOR MOBILE COMPABILITY****/
+
+document.addEventListener("touchstart", function() {
+    if (active) return; // do nothing if already active
+
+    document.body.classList.remove("game-over");
+    curSequence = [nextSequence()]; //start the sequence
+    active = true;
+    text.textContent = "Level 1"
+    playerClicks = []
+
+    setTimeout(() => blink(curSequence[0]), 350)
+    curPlace = 0;
+    acceptClick = true;
+})
+
+for (let btn in buttons) {
+    buttons[btn].addEventListener("touchstart", function() {
+        if (!active || !acceptClick) return;    // do nothing if not active and not accepting clicks
+
+        playerClicks.push(btn);
+    
+        pressed(btn);
+    
+        if (playerClicks[curPlace] !== curSequence[curPlace]) { // if incorrect button pressed, then finish game
+            document.body.classList.add("game-over");
+            text.textContent = "Game Over!"
+            sound["wrong"].play();
+            active = false;
+            setTimeout(() => {
+                if (!active) {
+                document.body.classList.remove("game-over");
+                text.textContent = "Press Key to Start"
+                }
+            }, 1500)
+            
+        }
+        else if (curPlace === curSequence.length-1) {    // finished level, go to next level
+            text.textContent = `Level ${curPlace+2}` 
+            const newColor = nextSequence()
+            curSequence.push(newColor)
+            for (let i = 0; i < curSequence.length; i++) {
+            setTimeout(() => blink(curSequence[i]), 500*i + 500)
+            }
+            curPlace = 0
+            playerClicks = []
+        } else {    // otherwise, correct button was pressed, check next
+            curPlace++
+        }
+    })   
+}
+
+
+
 
 
