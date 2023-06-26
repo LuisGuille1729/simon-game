@@ -6,11 +6,11 @@ const buttons = {
 }
 
 const sound = {
-    "green": new Audio('/sounds/green.mp3'),
-    "red": new Audio('/sounds/red.mp3'),
-    "yellow": new Audio('/sounds/yellow.mp3'),
-    "blue": new Audio('/sounds/blue.mp3'),
-    "wrong": new Audio('/sounds/wrong.mp3')
+    "green": new Audio('https://github.com/LuisGuille1729/simon-game/raw/main/sounds/green.mp3'),
+    "red": new Audio('https://github.com/LuisGuille1729/simon-game/raw/main/sounds/red.mp3'),
+    "yellow": new Audio('https://github.com/LuisGuille1729/simon-game/raw/main/sounds/yellow.mp3'),
+    "blue": new Audio('https://github.com/LuisGuille1729/simon-game/raw/main/sounds/blue.mp3'),
+    "wrong": new Audio('https://github.com/LuisGuille1729/simon-game/raw/main/sounds/wrong.mp3')
 }
 
 function nextSequence() {
@@ -44,13 +44,11 @@ let active = false;
 let acceptClick = false;
 let curPlace = 0;
 let playerClicks = []
-let highScore = 0;
 
-document.querySelector("body").addEventListener("keydown", function() {
+document.addEventListener("keydown", function() {
     if (active) return; // do nothing if already active
 
     document.body.classList.remove("game-over");
-    document.querySelector("#score").classList.add("hidden") // do not display score as to not distract
     curSequence = [nextSequence()]; //start the sequence
     active = true;
     text.textContent = "Level 1"
@@ -74,13 +72,10 @@ for (let btn in buttons) {
             text.textContent = "Game Over!"
             sound["wrong"].play();
             active = false;
-            highScore = curSequence.length - 1 > highScore ? curSequence.length - 1 : highScore;
-            document.querySelector("#score").textContent = `High Score: ${highScore}`;
             setTimeout(() => {
                 if (!active) {
                 document.body.classList.remove("game-over");
                 text.textContent = "Press Key to Start"
-                document.querySelector("#score").classList.remove("hidden")
                 }
             }, 1500)
             
@@ -99,4 +94,3 @@ for (let btn in buttons) {
         }
     })   
 }
-
