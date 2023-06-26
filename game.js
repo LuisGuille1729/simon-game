@@ -1,3 +1,5 @@
+console.log("Running game code.")
+
 const buttons = {
     "green": document.querySelector(".green"),
     "red": document.querySelector(".red"),
